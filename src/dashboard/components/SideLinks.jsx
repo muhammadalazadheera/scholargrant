@@ -13,93 +13,61 @@ function SideLinks() {
   /**
    * ADMIN MENUS
    */
-  if (role === "admin") {
-    return (
-      <>
-        <ul className="sidebar-menu">
-          <li>
-            <NavLink to="/dashboard" end>
-              <span className="mr-2">🔲</span>Dashboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/profile">
-              <span className="mr-2">🪪</span>Admin Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/profile">
-              <span className="mr-2">📋</span>Add Scholarship
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/profile">
-              <span className="mr-2">🧾</span>Manage Scholarships
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/profile">
-              <span className="mr-2">📑</span>Applied Applications
-            </NavLink>
-          </li>
+
+  return (
+    <>
+      <ul className="sidebar-menu">
+        <li>
+          <NavLink to="/dashboard" end>
+            <span className="mr-2">🔲</span>Dashboard
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/dashboard/profile">
+            <span className="mr-2">🪪</span>My Profile
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/dashboard/profile">
+            <span className="mr-2">📑</span>Applied Applications
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/dashboard/profile">
+            <span className="mr-2">👍🏻</span>My Reviews
+          </NavLink>
+        </li>
+        {(role === "admin" || role === "moderator") && (
+            <>
+              <li>
+                <NavLink to="/dashboard/profile">
+                  <span className="mr-2">📋</span>Add Scholarship
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/profile">
+                  <span className="mr-2">🧾</span>Manage Scholarships
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink to="/dashboard/profile">
+                  <span className="mr-2">👍🏻</span>Manage Reviews
+                </NavLink>
+              </li>
+            </>
+          )}
+
+        {role === "admin" && (
           <li>
             <NavLink to="/dashboard/admin/users">
-              <span className="mr-2">🧑🏻‍🎓</span>Users
+              <span className="mr-2">🧑🏻‍🎓</span>Manage Users
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard/profile">
-              <span className="mr-2">👍🏻</span>Reviews
-            </NavLink>
-          </li>
-        </ul>
-      </>
-    );
-  }
-
-  /**
-   * MODERATOR MENUS
-   */
-  if (role === "moderator") {
-    return (
-      <>
-        <ul className="sidebar-menu">
-          <li>
-            <NavLink to="/dashboard" end>
-              <span className="mr-2">🏠</span> Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/profile">
-              <span className="mr-2">🏠</span> Moderator Profile
-            </NavLink>
-          </li>
-        </ul>
-      </>
-    );
-  }
-
-  /**
-   * USER MENUS
-   */
-  if (role === "user") {
-    return (
-      <>
-        <ul className="sidebar-menu">
-          <li>
-            <NavLink to="/dashboard" end>
-              <span className="mr-2">🏠</span> Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/profile">
-              <span className="mr-2">🏠</span> User Profile
-            </NavLink>
-          </li>
-        </ul>
-      </>
-    );
-  }
+        )}
+      </ul>
+    </>
+  );
 }
 
 export default SideLinks;
