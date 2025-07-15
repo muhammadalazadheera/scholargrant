@@ -13,6 +13,8 @@ import Users from "../dashboard/pages/Users";
 import Forbidden from '../pages/Forbidden'
 import NotFound from '../pages/NotFound'
 import ModMinRoute from "./ModMinRoutes";
+import AddScholar from "../dashboard/pages/AddScholar";
+import ManageScholarships from "../dashboard/pages/ManageScholarships";
 
 const router = createBrowserRouter([
     {
@@ -60,7 +62,11 @@ const router = createBrowserRouter([
             // MODMIN ROUTES
             {
                 path: 'admin/add-scholarship',
-                element: <ModMinRoute></ModMinRoute>
+                element: <ModMinRoute><AddScholar></AddScholar></ModMinRoute>
+            },
+            {
+                path: 'admin/manage-scholarships',
+                element: <ModMinRoute><ManageScholarships></ManageScholarships></ModMinRoute>
             }
         ]
     },

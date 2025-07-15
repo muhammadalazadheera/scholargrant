@@ -40,12 +40,12 @@ function SideLinks() {
         {(role === "admin" || role === "moderator") && (
             <>
               <li>
-                <NavLink to="/dashboard/profile">
+                <NavLink to="/dashboard/admin/add-scholarship">
                   <span className="mr-2">📋</span>Add Scholarship
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/profile">
+                <NavLink to="/dashboard/admin/manage-scholarships">
                   <span className="mr-2">🧾</span>Manage Scholarships
                 </NavLink>
               </li>

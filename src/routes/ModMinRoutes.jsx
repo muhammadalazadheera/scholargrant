@@ -12,7 +12,7 @@ const ModMinRoute = ({ children }) => {
         return <Loading />
     }
 
-    if (!user || role !== 'admin' || role !== 'moderator') {
+    if (!user && role === 'user') {
         return <Navigate state={{ from: location.pathname }} to="/forbidden"></Navigate>
     }
 
