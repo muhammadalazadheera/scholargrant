@@ -12,6 +12,7 @@ import AdminRoute from "./AdminRoutes";
 import Users from "../dashboard/pages/Users";
 import Forbidden from '../pages/Forbidden'
 import NotFound from '../pages/NotFound'
+import ModMinRoute from "./ModMinRoutes";
 
 const router = createBrowserRouter([
     {
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
             {
                 path: 'admin/users',
                 element:<AdminRoute><Users></Users></AdminRoute>
+            },
+            // MODMIN ROUTES
+            {
+                path: 'admin/add-scholarship',
+                element: <ModMinRoute></ModMinRoute>
             }
         ]
     },

@@ -6,6 +6,7 @@ import "../assets/css/dashboard.css";
 import { NavLink } from "react-router";
 import useAuth from "../hooks/useAuth";
 import Loading from "../pages/Loding";
+import { ToastContainer } from "react-toastify";
 
 function DashboardLayout() {
   const {user, loading} = useAuth();
@@ -71,6 +72,7 @@ function DashboardLayout() {
         {/* Content */}
         <main className="p-4 flex-1 overflow-y-auto">
           <Outlet></Outlet>
+          <ToastContainer></ToastContainer>
         </main>
       </div>
     </div>
