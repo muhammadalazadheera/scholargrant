@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+    name: "light";
+    default: true;
+    --color-primary: #24B47E;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.custom-container {
+    @apply container mx-auto md:w-[95%] lg:w-[85%];
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.autoplay-progress {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--swiper-theme-color);
+}
+
+.autoplay-progress svg {
+    --progress: 0;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    stroke-width: 4px;
+    stroke: var(--swiper-theme-color);
+    fill: none;
+    stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
+    stroke-dasharray: 125.6;
+    transform: rotate(-90deg);
+}
+
+.active {
+    @apply text-primary;
+}
+
+.logo-text {
+    background-image: linear-gradient(90deg, #339AF0, #8480FF);
+    background-clip: text;
+    color: transparent;
+}
+
+.menu li {
+    @apply text-[#FFFFFF] hover:text-[#339AF0] text-sm uppercase font-bold;
+}
+
+.right-menu li a {
+    @apply text-[#FFFFFF] hover:text-white text-sm font-normal;
+}
+
+.login-page .menu li {
+    color: black;
+}
+
+
+.hero-text {
+    @apply bg-[#000000ab] flex justify-center items-start flex-col;
+}
+
+.hero-text h1 {
+    @apply text-xl md:text-3xl font-extrabold uppercase my-5 text-white;
+    letter-spacing: 5px;
+    margin: 0;
+}
+
+.hero-text p {
+    @apply text-2xl text-white font-extralight
+}
+
+.collage {
+    column-count: 3;
+    column-gap: 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.img-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+    break-inside: avoid;
+    border-radius: 2px;
+}
+
+.img-wrapper img {
+    width: 100%;
+    display: block;
+    transition: transform 0.3s ease;
+    transform-origin: center center;
+}
+
+.img-wrapper:hover img {
+    transform: scale(1.05);
+}
+
+
+
+
