@@ -1,0 +1,133 @@
+import React, { useState } from "react";
+import { useScholarships } from "../hooks/useScholarships";
+import Loading from "./Loding";
+import { Link } from "react-router";
+
+function AllScholarships() {
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const limit = 8;
+
+  const { data, isLoading, isError } = useScholarships({ page, limit, search });
+  const totalPages = data?.totalPages || 1;
+  const scholarships = data?.scholarships;
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(searchInput); // Set actual query
+    setPage(1); // Reset page
+  };
+
+  if (isLoading) return <Loading />;
+
+  return (
+    <div className="mt-[70px] py-2">
+      <div className="w-[85%] mx-auto">
+        <h1 className="font-bold uppercase text-primary">All Scholarships</h1>
+        <h2 className="font-extralight text-4xl my-3">
+          Gateway to Opportunities
+        </h2>
+        <p className="font-light md:w-[400px]">
+          Discover a comprehensive list of scholarships tailored to various
+          fields, degrees, and universities.
+        </p>
+      </div>
+
+      <div className="w-[85%] mx-auto">
+        <div className="mt-5">
+          <form onSubmit={handleSearch} className="mb-5">
+            <small>
+              Search By Scholarship Name, University Name, Country, and Degree.
+              Leave Blank And Click Search Button To Get All The Scholarships.
+            </small>
+            <input
+              className="input input-primary w-[80%] border-r-0 rounded-tr-none rounded-br-none focus-within:outline-0"
+              type="text"
+              name="query"
+              id="query"
+              placeholder="Search by University Name, Degree, etc."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <input
+              className="btn btn-primary w-[20%] rounded-none"
+              type="submit"
+              value="Search"
+            />
+          </form>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {scholarships?.map((sch) => (
+              <div
+                key={sch._id}
+                className="card bg-base-100 shadow-sm rounded-sm"
+              >
+                <figure>
+                  <img
+                    src={
+                      sch.universityImage ||
+                      "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                    }
+                    alt={sch.scholarshipName}
+                  />
+                </figure>
+                <div className="card-body px-2">
+                  <h2 className="card-title">{sch.scholarshipName}</h2>
+                  <p className="text-sm text-gray-600">{sch.universityName}</p>
+                  <div className="text-sm text-gray-400">
+                    {sch.country}, {sch.city}
+                  </div>
+                  <div className="text-sm text-gray-400">
+                    Tuition Fees ({sch.tuitionFees})
+                  </div>
+                  <div className="text-sm text-gray-400">{sch.degree}</div>
+                  <div className="card-actions justify-start mt-4">
+                    <Link to={`/scholarship-details/${sch._id}`} className="btn btn-sm btn-block btn-outline btn-primary">
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          <div className="flex gap-2 mt-4 items-center justify-center flex-wrap">
+            <button
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={page === 1}
+              className="btn btn-warning"
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+              (pageNum) => (
+                <button
+                  key={pageNum}
+                  onClick={() => setPage(pageNum)}
+                  className={`btn btn-sm ${
+                    page === pageNum ? "btn-primary" : "btn-outline"
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              )
+            )}
+
+            <button
+              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              disabled={page === totalPages}
+              className="btn btn-warning"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AllScholarships;

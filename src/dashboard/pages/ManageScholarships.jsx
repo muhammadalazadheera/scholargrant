@@ -4,9 +4,10 @@ import { useScholarships } from "../../hooks/useScholarships";
 import Loading from "../../pages/Loding";
 import useAxios from "../../hooks/useAxios";
 import useAuth from "../../hooks/useAuth";
+import { useScholarshipsExtend } from "../../hooks/useScholarshipsExtend";
 
 const ManageScholarships = () => {
-  const { data: scholarships = [], refetch, isLoading } = useScholarships();
+  const { data: scholarships = [], refetch, isLoading } = useScholarshipsExtend()
   const [editingScholarship, setEditingScholarship] = useState(null);
   const [viewingScholarship, setViewingScholarship] = useState(null);
   const axios = useAxios();
@@ -69,9 +70,9 @@ const ManageScholarships = () => {
 
   return (
     <div className="p-2 border border-black/5 shadow-sm">
-      <h2 className="text-2xl font-bold mb-4">Manage Scholarships</h2>
+      <h2 className="text-2xl font-bold mb-4 ml-2">Manage Scholarships</h2>
       <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
+        <table className="table table-zebra w-full text-xs">
           <thead>
             <tr>
               <th>Name</th>

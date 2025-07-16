@@ -189,6 +189,8 @@ const AddScholar = () => {
           placeholder="Posted User Email"
           className="input input-bordered w-full"
           required
+          readOnly
+          defaultValue={user.email}
         />
       </div>
       {/* Image upload */}

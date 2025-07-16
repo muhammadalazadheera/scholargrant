@@ -13,6 +13,14 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
+.social-links ul li {
+    @apply inline-block mr-1;
+}
+
+.social-links ul li a img {
+    @apply w-[40px]
+}
+
 .custom-container {
     @apply container mx-auto md:w-[95%] lg:w-[85%];
 }
@@ -80,7 +88,7 @@ body {
 }
 
 .menu li {
-    @apply text-[#FFFFFF] hover:text-[#339AF0] text-sm uppercase font-bold;
+    @apply hover:text-primary text-sm uppercase font-bold;
 }
 
 .right-menu li a {

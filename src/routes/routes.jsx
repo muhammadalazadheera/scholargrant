@@ -3,7 +3,6 @@ import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import BaseLayout from "../BaseLayout";
-import ProfilePage from "../pages/ProfilePage";
 import PrivateRoutes from "./PrivateRoutes";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import DashboardHome from "../dashboard/pages/Home";
@@ -15,6 +14,13 @@ import NotFound from '../pages/NotFound'
 import ModMinRoute from "./ModMinRoutes";
 import AddScholar from "../dashboard/pages/AddScholar";
 import ManageScholarships from "../dashboard/pages/ManageScholarships";
+import AllScholarships from "../pages/AllScholarships";
+import ScholarshipDetails from "../pages/ScholarshipDetails";
+import ApplyScholarship from "../pages/ApplyScholarship";
+import MyApplications from "../dashboard/pages/MyApplications";
+import MyReviews from "../dashboard/pages/MyReviews";
+import ManageReviews from "../dashboard/pages/ManageReviews";
+import ManageApplications from "../dashboard/pages/ManageApplications";
 
 const router = createBrowserRouter([
     {
@@ -36,8 +42,17 @@ const router = createBrowserRouter([
                 Component: RegisterPage
             },
             {
-                path: "/profile",
-                element: <PrivateRoutes><ProfilePage></ProfilePage></PrivateRoutes>
+                path: "/all-scholarships",
+                element: <PrivateRoutes><AllScholarships></AllScholarships></PrivateRoutes>
+            },
+            ,
+            {
+                path: "/scholarship-details/:id",
+                element: <PrivateRoutes><ScholarshipDetails></ScholarshipDetails></PrivateRoutes>
+            },
+            {
+                path: 'apply-scholarship',
+                element: <PrivateRoutes><ApplyScholarship></ApplyScholarship></PrivateRoutes>
             }
         ]
     },
@@ -54,6 +69,14 @@ const router = createBrowserRouter([
                 path: "profile",
                 Component: Profile
             },
+            {
+                path: "my-applications",
+                element: <MyApplications />
+            },
+            {
+                path: "my-reviews",
+                element: <MyReviews />
+            },
             // ADMIN ROUTES
             {
                 path: 'admin/users',
@@ -67,6 +90,14 @@ const router = createBrowserRouter([
             {
                 path: 'admin/manage-scholarships',
                 element: <ModMinRoute><ManageScholarships></ManageScholarships></ModMinRoute>
+            },
+            {
+                path: 'admin/manage-reviews',
+                element: <ModMinRoute><ManageReviews></ManageReviews></ModMinRoute>
+            },
+            {
+                path: 'admin/manage-applications',
+                element: <ModMinRoute><ManageApplications></ManageApplications></ModMinRoute>
             }
         ]
     },

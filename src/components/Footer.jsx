@@ -6,9 +6,9 @@ function Footer() {
       <div className="w-[95%] lg:w-[85%] mx-auto">
         <div className="w-full h-[250px] flex flex-col md:flex-row justify-between items-center">
           <div className="text-center pt-5 md:pt-0">
-            <h1 className="logo-text text-3xl font-extrabold">SpeakIt</h1>
+            <h1 className="logo-text text-3xl font-extrabold">ScholarGrant</h1>
             <p className="text-xl font-light text-(--primary-color) capitalize">
-              Learn. Live. Thrive.
+              Gateway To Opportunity.
             </p>
           </div>
           <div className="my-7 md:my-0">

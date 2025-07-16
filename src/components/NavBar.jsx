@@ -1,20 +1,20 @@
 import React, { use, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
+import Loading from "../pages/Loding";
 
 function NavBar() {
   const { user, signOutUser, loading } = use(AuthContext);
   const location = useLocation();
-  const pageClass = location.pathname === '/login' || location.pathname === '/register' ? 'login-page' : '';
-
-  const tooltipRef = useRef(null);
-  useEffect(() => {
-    if (tooltipRef.current) {
-      tooltipRef.current.textContent = user.displayName;
-    }
-  }, [user]);
+  const pageClass =
+    location.pathname === "/login" || location.pathname === "/register"
+      ? "login-page"
+      : "";
 
   const navigate = useNavigate();
+
+  const isHome = location.pathname === "/";
+
   const handleSignOut = () => {
     signOutUser()
       .then(() => {
@@ -38,16 +38,18 @@ function NavBar() {
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-ring loading-xl"></span>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="absolute top-0 z-10 w-full">
-      <div className={`${pageClass} navbar h-[70px] container mx-auto md:w-[95%] lg:w-[85%] p-0`}>
+    <div
+      className={`absolute top-0 z-10 w-full ${
+        isHome ? "" : "border-b border-black/20"
+      }`}
+    >
+      <div
+        className={`${pageClass} navbar h-[70px] container mx-auto md:w-[95%] lg:w-[85%] p-0`}
+      >
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -79,33 +81,55 @@ function NavBar() {
                 <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <NavLink to="/find-tutorial">All Scholarships</NavLink>
+                <NavLink to="/all-scholarships">All Scholarships</NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard">Dashboard</NavLink>
               </li>
-              <li>
-                <a className="hover:text-white" onClick={handleSignOut}>
-                  Logout
-                </a>
-              </li>
+              {user && (
+                <li>
+                  <a className="hover:text-white" onClick={handleSignOut}>
+                    Logout
+                  </a>
+                </li>
+              )}
+              {!user && (
+              <>
+                <NavLink to="/login" className="btn btn-outline btn-info mr-3">
+                  Login
+                </NavLink>
+                <NavLink
+                  to="/register"
+                  className="btn btn-outline btn-info mr-3 hidden md:grid"
+                >
+                  Register
+                </NavLink>
+              </>
+            )}
             </ul>
           </div>
           <Link to="/" className="logo-text text-xl lg:text-3xl font-extrabold">
-            SpeakIt
+            ScholarGrant
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul
+            className={`menu menu-horizontal px-1 ${
+              isHome ? "text-white" : "text-black"
+            }`}
+          >
             <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/find-tutorial">All Scholarships</NavLink>
-              </li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/all-scholarships">All Scholarships</NavLink>
+            </li>
+            {user && (
               <li>
                 <NavLink to="/dashboard">Dashboard</NavLink>
               </li>
+            )}
+            
           </ul>
         </div>
         <div className="navbar-end">
