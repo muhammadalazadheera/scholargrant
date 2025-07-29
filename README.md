@@ -54,7 +54,7 @@ cd scholar-grant
 
 # Install Dependencies
 ``` bash
-    npm install
+npm install
 ```
 
 # Configure Environment Variables
@@ -71,6 +71,6 @@ VITE_STRIPE_PUBLISHABLE_KEY=your_stripe_key
 
 # Start the App
 ```bash
-   npm run dev
+npm run dev
 ```
 
