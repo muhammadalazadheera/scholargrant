@@ -77,6 +77,10 @@ body {
     transform: rotate(-90deg);
 }
 
+.swiper-slide .review-slide img {
+    width: auto;
+}
+
 .active {
     @apply text-primary;
 }

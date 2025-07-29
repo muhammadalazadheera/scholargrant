@@ -14,9 +14,9 @@ function MyApplications() {
   const [reviewApp, setReviewApp] = useState([]);
   const [editForm, setEditForm] = useState(false);
   const degrees = ["Diploma", "Bachelor", "Masters"];
-  const genders = ["Male", "Female", "Other"];
   const studyGapOptions = ["No gap", "1 year", "2 years", "3+ years"];
   const [getApplication, setGetApplication] = useState(false);
+  const [feedbacks, setFeedbacks] = useState([]);
 
   const [formData, setFormData] = useState({
     rating: "",
@@ -38,7 +38,7 @@ function MyApplications() {
       date: new Date().toISOString().slice(0, 10),
       scholarshipName: reviewApp.scholarshipName,
       universityName: reviewApp.universityName,
-      scholarshipId: reviewApp._id,
+      scholarshipId: reviewApp.scholarshipId,
       userName: user.displayName,
       userEmail: user.email,
       userImage: user.photoURL || null,
@@ -104,8 +104,6 @@ function MyApplications() {
       studyGap: formData.get("studyGap") || "", // optional field fallback
     };
 
-    console.log(updatedData);
-
     // Then make PUT request to backend
     axios
       .put(`/edit-application/${reviewApp._id}`, updatedData, {
@@ -131,10 +129,21 @@ function MyApplications() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setApplications(res.data);
       });
   }, [getApplication]);
+
+  useEffect(() => {
+    axios
+      .get(`/get-feedback/${viewApplication?._id}`, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setFeedbacks(res.data);
+      });
+  }, [viewApplication]);
 
   return (
     <div>
@@ -160,7 +169,7 @@ function MyApplications() {
               </tr>
             ) : (
               applications.map((application) => (
-                <tr className="capitalize">
+                <tr key={application._id} className="capitalize">
                   <td>{application?.scholarshipName}</td>
                   <td>{application?.universityName}</td>
                   <td>{application?.applyingDegree}</td>
@@ -302,6 +311,26 @@ function MyApplications() {
                     {viewApplication.scholarshipCategory}
                   </p>
                 </div>
+                <div className="my-5">
+                  <h2 className="text-xl font-bold text-gray-800">
+                    Feedbacks
+                  </h2>
+                  <div className="my-4">
+                    {
+                      feedbacks.map((feedback) => {
+                        return(
+                          <div className="border border-black/10 p-4 rounded-sm my-2">
+                            <p className="font-thin text-2xl mb-1">{feedback.comment}</p>
+                            <div className="flex items-center gap-1">
+                              <img className="rounded-full w-[20px]" src={feedback.photo} alt="" />
+                              <small>{feedback.userName}</small>
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -311,15 +340,13 @@ function MyApplications() {
       {editForm && (
         <dialog open className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">Edit Review</h3>
+            <h3 className="font-bold text-lg mb-4">
+              Edit Scholarship Application
+            </h3>
             <form
               className="p-6 bg-gray-50 rounded-md shadow-md"
               onSubmit={editApp} // 🔄 Update function
             >
-              <h2 className="text-xl font-semibold mb-4">
-                Edit Scholarship Application
-              </h2>
-
               {/* Phone */}
               <div className="mb-4">
                 <label className="block mb-1 font-medium">Phone Number</label>

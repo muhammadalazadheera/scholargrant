@@ -35,17 +35,19 @@ function ManageApplications() {
     const reviewData = {
       ...formData,
       date: new Date().toISOString().slice(0, 10),
-      scholarshipId: reviewApp._id,
+      applicationId: reviewApp._id,
+      userName: user.displayName,
+      photo: user.photoURL,
     };
 
     axios
-      .post("/add-review", reviewData, {
+      .post("/add-feedback", reviewData, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
       })
       .then((res) => {
-        toast.success("Review added successfull!");
+        toast.success("Feedback added successfull!");
         setReviewForm(false);
       })
       .catch((err) => {
@@ -98,8 +100,6 @@ function ManageApplications() {
       studyGap: formData.get("studyGap") || "", // optional field fallback
     };
 
-    console.log(updatedData);
-
     // Then make PUT request to backend
     axios
       .put(`/edit-application/${reviewApp._id}`, updatedData, {
@@ -117,6 +117,25 @@ function ManageApplications() {
       });
   };
 
+  const changeStatus = (id, status) => {
+    axios
+      .put(
+        "/change-application-status",
+        { id, status },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        toast.success(`Status successfully changed!`);
+      })
+      .catch((err) => {
+        toast.error(`${err}`);
+      });
+  };
+
   useEffect(() => {
     axios
       .get("/my-applications", {
@@ -125,7 +144,6 @@ function ManageApplications() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setApplications(res.data);
       });
   }, [getApplication]);
@@ -154,12 +172,26 @@ function ManageApplications() {
               </tr>
             ) : (
               applications.map((application) => (
-                <tr className="capitalize">
+                <tr key={application._id} className="capitalize">
                   <td>{application?.scholarshipName}</td>
                   <td>{application?.universityName}</td>
                   <td>{application?.applyingDegree}</td>
                   <td>{application?.scholarshipCategory}</td>
-                  <td>{application?.status}</td>
+                  <td>
+                    <select
+                      className="select select-primary"
+                      name="role"
+                      id="role"
+                      defaultValue={application?.status}
+                      onChange={(e) =>
+                        changeStatus(application?._id, e.target.value)
+                      }
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="processing">Processing</option>
+                      <option value="completed">Completed</option>
+                    </select>
+                  </td>
                   <td>
                     <button
                       onClick={() => {
@@ -181,7 +213,6 @@ function ManageApplications() {
                         setReviewApp(application);
                         setEditForm(true);
                       }}
-                      disabled={application.status === "pending"}
                       className="btn btn-warning btn-sm mx-1"
                     >
                       <i className="fas fa-pencil"></i>
@@ -199,6 +230,7 @@ function ManageApplications() {
           </tbody>
         </table>
       </div>
+
       {viewApplication && (
         <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
           <div className="bg-white rounded shadow-lg w-[70%] p-6 overflow-y-auto max-h-[90vh] relative">
@@ -301,27 +333,14 @@ function ManageApplications() {
           </div>
         </div>
       )}
+
       {reviewForm && (
         <dialog open className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">Add Review</h3>
+            <h3 className="font-bold text-lg mb-4">Add Feedback</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="label">Rating (1-5)</label>
-                <input
-                  type="number"
-                  name="rating"
-                  min="1"
-                  max="5"
-                  required
-                  className="input input-bordered w-full"
-                  value={formData.rating}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <label className="label">Review Comment</label>
+                <label className="label">Feedback Comment</label>
                 <textarea
                   name="comment"
                   required
@@ -333,7 +352,7 @@ function ManageApplications() {
 
               <div className="modal-action">
                 <button type="submit" className="btn btn-primary">
-                  Submit Review
+                  Submit Feedback
                 </button>
                 <button
                   type="button"
@@ -343,6 +362,137 @@ function ManageApplications() {
                   Cancel
                 </button>
               </div>
+            </form>
+          </div>
+        </dialog>
+      )}
+
+      {editForm && (
+        <dialog open className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-4">
+              Edit Scholarship Application
+            </h3>
+            <form
+              className="p-6 bg-gray-50 rounded-md shadow-md"
+              onSubmit={editApp} // 🔄 Update function
+            >
+              {/* Phone */}
+              <div className="mb-4">
+                <label className="block mb-1 font-medium">Phone Number</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  required
+                  defaultValue={reviewApp.phone}
+                  placeholder="+8801XXXXXXXXX"
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              {/* Photo */}
+              <div className="mb-4">
+                <label className="block mb-1 font-medium">
+                  Applicant Photo
+                </label>
+                <input
+                  type="text"
+                  name="photo"
+                  required
+                  defaultValue={reviewApp.photo}
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              {/* Address */}
+              <div className="mb-4">
+                <label className="block mb-1 font-medium">
+                  Address (Village, District, Country)
+                </label>
+                <textarea
+                  name="address"
+                  required
+                  defaultValue={reviewApp.address}
+                  placeholder="Enter your full address"
+                  className="textarea textarea-bordered w-full"
+                  rows={3}
+                ></textarea>
+              </div>
+
+              {/* Degree */}
+              <div className="mb-4">
+                <label className="block mb-1 font-medium">
+                  Applying Degree
+                </label>
+                <select
+                  name="applyingDegree"
+                  required
+                  defaultValue={reviewApp.applyingDegree}
+                  className="select select-bordered w-full"
+                >
+                  <option defaultValue="">Select degree</option>
+                  {degrees.map((d) => (
+                    <option key={d} defaultValue={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* SSC */}
+              <div className="mb-4">
+                <label className="block mb-1 font-medium">SSC Result</label>
+                <input
+                  type="text"
+                  name="sscResult"
+                  required
+                  defaultValue={reviewApp.sscResult}
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              {/* HSC */}
+              <div className="mb-4">
+                <label className="block mb-1 font-medium">HSC Result</label>
+                <input
+                  type="text"
+                  name="hscResult"
+                  required
+                  defaultValue={reviewApp.hscResult}
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              {/* Study Gap */}
+              <div className="mb-4">
+                <label className="block mb-1 font-medium">
+                  Study Gap (Optional)
+                </label>
+                <select
+                  name="studyGap"
+                  defaultValue={reviewApp.studyGap}
+                  className="select select-bordered w-full"
+                >
+                  <option defaultValue="">Select if any</option>
+                  {studyGapOptions.map((gap) => (
+                    <option key={gap} defaultValue={gap}>
+                      {gap}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Update Button */}
+              <button type="submit" className="btn btn-primary w-full mt-6">
+                Update Application
+              </button>
+              <button
+                onClick={() => setEditForm(false)}
+                type="submit"
+                className="btn btn-error w-full mt-6"
+              >
+                Cancel
+              </button>
             </form>
           </div>
         </dialog>

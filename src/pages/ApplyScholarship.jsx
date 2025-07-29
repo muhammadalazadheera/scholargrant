@@ -56,7 +56,7 @@ const ApplyScholarship = () => {
       universityName: scholarship.universityName,
       scholarshipCategory: scholarship.scholarshipCategory,
       subjectCategory: scholarship.subjectCategory,
-      scholarshipId: scholarship._id,
+      scholarshipId: id,
       studentName: user.displayName,
       studentEmail: user.email,
       studentId: stuId,

@@ -76,7 +76,6 @@ function ManageReviews() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setReviews(res.data);
       });
   }, [getApplication]);
@@ -88,22 +87,23 @@ function ManageReviews() {
           {reviews.map((application) => (
             <div
               key={application._id}
-              className="card bg-base-100 shadow-sm rounded-sm p-2 text-center"
+              className="card bg-base-100 shadow-sm rounded-sm p-2 mx-2 text-center"
             >
               <figure>
                 <img
+                className="mt-4 rounded-full"
                   src={application.userImage}
                   alt={application.scholarshipName}
                 />
               </figure>
               <div className="card-body text-center">
-                <h2 className="text-lg text-center">{application.userName}</h2>
+                <h2 className="text-lg text-center text-primary">{application.userName}</h2>
                 <p className="text-sm text-gray-600">{application.rating}/5</p>
                 <p className="text-sm text-gray-600">{application.comment}</p>
                 <div className="card-actions justify-start mt-4">
                   <button
                   onClick={() => handleDelete(application._id)}
-                    className="btn btn-sm btn-block btn-outline btn-primary"
+                    className="btn btn-sm btn-block btn-outline btn-error"
                   >
                     Delete
                   </button>

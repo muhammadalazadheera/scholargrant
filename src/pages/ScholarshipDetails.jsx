@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
 import { Link, useParams } from "react-router";
+import ReviewSlider from "../components/DetailsPage/ReviewSlider";
 
 function ScholarshipDetails() {
   const axios = useAxios();
   const { user } = useAuth();
   const { id } = useParams();
   const [scholarship, setScholarship] = useState([]);
+  const [reviews, setReviews] = useState([]);
   useEffect(() => {
     axios
       .get(`/scholarship/${id}`, {
@@ -20,14 +22,34 @@ function ScholarshipDetails() {
         setScholarship(res.data);
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`/scholarship-reviews/6877c0f60ac6419c47b8016e`, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setReviews(res.data);
+      });
+  }, []);
+
   return (
     <div className="mt-[70px] w-[95%] md:w-[50%] mx-auto">
       <div className="text-center py-5">
         <div className="badge badge-outline badge-primary">Details</div>
-        <h1 className="text-5xl my-1 font-thin">{scholarship?.scholarshipName}</h1>
+        <h1 className="text-5xl my-1 font-thin">
+          {scholarship?.scholarshipName}
+        </h1>
         <p className="text-sm text-gray-500">
-          <span><i className="fas fa-calendar"></i> posted: {scholarship.postDate} </span> 
-          <span> <i className="fas fa-calendar"></i> deadline: {scholarship.deadline}</span>
+          <span>
+            <i className="fas fa-calendar"></i> posted: {scholarship.postDate}{" "}
+          </span>
+          <span>
+            {" "}
+            <i className="fas fa-calendar"></i> deadline: {scholarship.deadline}
+          </span>
         </p>
       </div>
       <img src={scholarship.universityImage} alt="" />
@@ -90,7 +112,20 @@ function ScholarshipDetails() {
         </table>
       </div>
       <div className="">
-        <Link to={`/apply-scholarship?id=${scholarship._id}`} className="btn btn-primary btn-block rounded-none mb-5">Apply</Link>
+        <Link
+          to={`/apply-scholarship?id=${scholarship._id}`}
+          className="btn btn-primary btn-block rounded-none mb-5"
+        >
+          Apply
+        </Link>
+      </div>
+      <div className="">
+        <h1 className="text-5xl my-2 font-thin">
+          Reviews
+        </h1>
+      </div>
+      <div className="mt-2 mb-5">
+        <ReviewSlider reviews={reviews} />
       </div>
     </div>
   );

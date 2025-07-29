@@ -18,7 +18,7 @@ function RegisterPage() {
     const password = e.target.password.value;
     const photoURL = e.target.photoURL.value;
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    const passwordRegex = /^(?=.{1,5}$)[^A-Z!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]*$/;
 
     if (passwordRegex.test(password) === false) {
       setLoginMsg(true);
@@ -131,6 +131,7 @@ function RegisterPage() {
             <ul>
               <li>Must have an Uppercase letter in the password </li>
               <li>Must have a Lowercase letter in the password</li>
+              <li>Must have a special character in the password</li>
               <li>Length must be at least 6 character</li>
             </ul>
           </div>

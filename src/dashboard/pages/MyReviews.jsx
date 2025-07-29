@@ -104,7 +104,7 @@ function MyReviews() {
               </tr>
             ) : (
               reviews.map((application) => (
-                <tr className="capitalize">
+                <tr key={application._id} className="capitalize">
                   <td>{application?.scholarshipName}</td>
                   <td>{application?.universityName}</td>
                   <td>{application?.comment}</td>
