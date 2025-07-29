@@ -38,12 +38,12 @@ function LoginPage() {
     navigate("/");
   }
   return (
-    <div className="grid grid-cols-2 min-h-screen">
-      <div className="auth-page-img flex items-center justify-center">
-        <img width="400px" src={loginImage} alt="" />
+    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
+      <div className="auth-page-img mt-[100px] md:mt-0 flex items-center justify-center">
+        <img className="w-[200px] mx:w-[400px]" src={loginImage} alt="" />
       </div>
-      <div className="h-full flex flex-col justify-center items-center px-10">
-        <form onSubmit={loginUser} className="p-4 w-[80%] mx-auto">
+      <div className="h-full flex flex-col justify-center items-center px-4 md:px-10">
+        <form onSubmit={loginUser} className="p-4 w-full md:w-[80%] mx-auto">
           <div className="mb-4">
             <label
               htmlFor="email"
