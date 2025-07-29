@@ -36,13 +36,14 @@ function AllScholarships() {
 
       <div className="w-[85%] mx-auto">
         <div className="mt-5">
-          <form onSubmit={handleSearch} className="mb-5">
-            <small>
+          <small>
               Search By Scholarship Name, University Name, Country, and Degree.
               Leave Blank And Click Search Button To Get All The Scholarships.
             </small>
+          <form onSubmit={handleSearch} className="mb-5">
+            
             <input
-              className="input input-primary w-[80%] border-r-0 rounded-tr-none rounded-br-none focus-within:outline-0"
+              className="input input-primary block md:inline w-[100%] md:w-[80%] border-r-0 rounded-tr-none rounded-br-none focus-within:outline-0"
               type="text"
               name="query"
               id="query"
@@ -51,7 +52,7 @@ function AllScholarships() {
               onChange={(e) => setSearchInput(e.target.value)}
             />
             <input
-              className="btn btn-primary w-[20%] rounded-none"
+              className="btn btn-primary btn-block md:btn mt-2 md:mt-0 md:w-[20%] rounded-none"
               type="submit"
               value="Search"
             />

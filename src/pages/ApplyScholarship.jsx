@@ -122,7 +122,7 @@ const ApplyScholarship = () => {
         {paid ? "Paid" : "Unpaid"}
       </p>
       {!paid ? (
-        <div className="border p-4 my-5 w-[50%] rounded-sm py-7">
+        <div className="border p-4 my-5 w-[100%] md:w-[50%] rounded-sm py-7">
           <Elements stripe={stripePromise}>
             <CheckoutForm
               amount={parseFloat(fee)}

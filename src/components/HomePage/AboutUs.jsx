@@ -2,7 +2,7 @@ import React from "react";
 
 function AboutUs() {
   return (
-    <div className="custom-container grid grid-cols-2 gap-25 py-10">
+    <div className="custom-container grid grid-cols-1 p-6 md:p-0 md:grid-cols-2 gap-25 py-10">
       <div className="">
         <div className="text-primary font-bold text-lg">
           <h1>About Us</h1>

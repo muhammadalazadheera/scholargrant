@@ -36,7 +36,7 @@ function ScholarshipDetails() {
   }, []);
 
   return (
-    <div className="mt-[70px] w-[95%] md:w-[50%] mx-auto">
+    <div className="mt-[70px] w-[95%] md:w-[80%] lg:[w-50%] mx-auto">
       <div className="text-center py-5">
         <div className="badge badge-outline badge-primary">Details</div>
         <h1 className="text-5xl my-1 font-thin">

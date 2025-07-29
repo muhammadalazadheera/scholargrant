@@ -75,7 +75,7 @@ function NavBar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-[#101120] border border-[#7B99FF] z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-[#ffffff] border border-[#7B99FF] z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
                 <NavLink to="/">Home</NavLink>

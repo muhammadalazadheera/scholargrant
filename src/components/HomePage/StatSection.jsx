@@ -10,13 +10,13 @@ function StatSection() {
   });
   return (
     <div className="bg-gray-100 py-10">
-      <div className="custom-container grid grid-cols-2 gap-2 items-center">
-        <div className="">
+      <div className="custom-container grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
+        <div className="p-6">
           <div className="text-primary font-bold text-lg">
             <h1>Impact in Numbers</h1>
           </div>
           <div className="font-extralight lowercase my-5">
-            <h1 className="lowercase text-5xl">
+            <h1 className="lowercase text-2xl md:text-5xl">
               See the difference we're making.
             </h1>
             <h2 className="text-xl">one student at a time.</h2>
@@ -27,7 +27,7 @@ function StatSection() {
           </button>
         </div>
         <div className="">
-          <section className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-2 gap-6">
+          <section className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 gap-6">
             <Fade delay={100}>
               <div className="bg-white rounded-lg shadow-md px-6 py-10 text-center">
                 <div className="text-4xl mb-3">🗂</div>
