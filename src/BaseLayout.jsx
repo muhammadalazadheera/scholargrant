@@ -5,6 +5,7 @@ import { useNavigation } from "react-router";
 import nProgress from "nprogress";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer";
+import Loading from "./pages/Loding";
 
 function BaseLayout() {
   const navigation = useNavigation();
@@ -20,9 +21,7 @@ function BaseLayout() {
 
   if (isNavigating) {
     return (
-      <div className="flex justify-center items-center h-screen bg-black">
-        <span className="loading loading-ring loading-xl"></span>
-      </div>
+      <Loading />
     );
   }
 

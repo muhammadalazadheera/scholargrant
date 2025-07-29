@@ -1,5 +1,5 @@
 import {use} from "react";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import NavLinks from "./components/NavLinks";
 import SideLinks from "./components/SideLinks";
 import "../assets/css/dashboard.css";
@@ -13,6 +13,10 @@ function DashboardLayout() {
   if(loading) {
     return <Loading />
   }
+
+  const location = useLocation();
+  const pathnames = location.pathname.split('/');
+  let currentPage = pathnames[pathnames.length - 1].replace('-', ' ');
 
   
 
@@ -52,7 +56,7 @@ function DashboardLayout() {
                   <a>Dashboard</a>
                 </li>
                 <li>
-                  <a>Home</a>
+                  <a className="capitalize">{currentPage}</a>
                 </li>
               </ul>
             </div>
