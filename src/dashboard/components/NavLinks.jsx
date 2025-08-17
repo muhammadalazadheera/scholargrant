@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import useAuth from "../../hooks/useAuth";
 
 function NavLinks() {
@@ -18,10 +19,10 @@ function NavLinks() {
         className="dropdown-content menu p-2 bg-[#485696] w-40 text-black"
       >
         <li>
-          <a>Profile</a>
+          <Link className="text-white" to="/dashboard/profile">Profile</Link>
         </li>
         <li>
-          <a onClick={handleSignOut}>Logout</a>
+          <a className="text-white" onClick={handleSignOut}>Logout</a>
         </li>
       </ul>
     </>
