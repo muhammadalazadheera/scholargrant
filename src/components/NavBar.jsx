@@ -5,6 +5,7 @@ import Loading from "../pages/Loding";
 
 function NavBar() {
   const { user, signOutUser, loading } = use(AuthContext);
+  
   const location = useLocation();
   const pageClass =
     location.pathname === "/login" || location.pathname === "/register"
@@ -36,6 +37,10 @@ function NavBar() {
       setMode("light");
     }
   };
+
+  useEffect(() => {
+    console.log(loading)
+  }, [loading])
 
   if (loading) {
     return <Loading />;

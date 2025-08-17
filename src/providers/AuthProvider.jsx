@@ -53,9 +53,14 @@ function AuthProvider({ children }) {
     }
   };
 
-  const signInUser = (email, password) => {
-    setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+  const signInUser = async (email, password) => {
+    try {
+      setLoading(true);
+      return await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      setLoading(false)
+      toast.error(`${error.message}` || "An error occurred during sign-in");
+    }
   };
 
   const signInUserWithGoogle = async () => {

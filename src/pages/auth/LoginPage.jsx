@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import { use } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
@@ -17,11 +17,10 @@ function LoginPage() {
 
     signInUser(email, password)
       .then((user) => {
-        navigate("/");
+        if(user) {
+          navigate("/");
+        }
       })
-      .catch((error) => {
-        toast.error(error.message);
-      });
   };
 
   const signinWithGoogle = (e) => {
