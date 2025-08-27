@@ -7,6 +7,7 @@ import { NavLink } from "react-router";
 import useAuth from "../hooks/useAuth";
 import Loading from "../pages/Loding";
 import { ToastContainer } from "react-toastify";
+import MobileMenu from "./components/MobileMenu";
 
 function DashboardLayout() {
   const { user, loading } = useAuth();
@@ -42,27 +43,12 @@ function DashboardLayout() {
         <SideLinks />
       </aside>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col max-w-screen">
         <div className="bg-base-100 shadow px-4 h-[65px] flex justify-between items-center">
-          <div className="md:hidden">
-            <button className="btn btn-square btn-ghost text-black">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div>
-          <div className="text-lg font-semibold">
+
+          <MobileMenu />
+
+          <div className="text-lg font-semibold hidden md:block">
             <div className="breadcrumbs text-sm">
               <ul>
                 <li>
@@ -74,6 +60,7 @@ function DashboardLayout() {
               </ul>
             </div>
           </div>
+
           <div className="flex gap-3 items-center">
             <>
               <button

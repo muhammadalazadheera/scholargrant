@@ -10,7 +10,7 @@ const useUserRole = () => {
         queryKey: ['userRole', user?.email],
         enabled: !authLoading && !!user?.email,
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:5000/user-role`, {
+            const res = await axios.get(`/user-role`, {
                 headers: {
                     Authorization: "Bearer " + user.accessToken,
                 },
