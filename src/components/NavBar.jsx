@@ -4,8 +4,13 @@ import { AuthContext } from "../contexts/AuthContext";
 import Loading from "../pages/Loding";
 
 function NavBar() {
+  window.addEventListener("scroll", function () {
+    const element = document.getElementById("myElement");
+    element.classList.toggle("scrolled-class", window.scrollY > 0);
+  });
+
   const { user, signOutUser, loading } = use(AuthContext);
-  
+
   const location = useLocation();
   const pageClass =
     location.pathname === "/login" || location.pathname === "/register"
@@ -39,8 +44,7 @@ function NavBar() {
   };
 
   useEffect(() => {
-    console.log(loading)
-  }, [loading])
+  }, [loading]);
 
   if (loading) {
     return <Loading />;
@@ -48,6 +52,7 @@ function NavBar() {
 
   return (
     <div
+    id="myElement"
       className={`absolute top-0 z-10 w-full ${
         isHome ? "" : "border-b border-black/20"
       }`}
@@ -99,18 +104,21 @@ function NavBar() {
                 </li>
               )}
               {!user && (
-              <>
-                <NavLink to="/login" className="btn btn-outline btn-info mr-3">
-                  Login
-                </NavLink>
-                <NavLink
-                  to="/register"
-                  className="btn btn-outline btn-info mr-3 hidden md:grid"
-                >
-                  Register
-                </NavLink>
-              </>
-            )}
+                <>
+                  <NavLink
+                    to="/login"
+                    className="btn btn-outline btn-info mr-3"
+                  >
+                    Login
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    className="btn btn-outline btn-info mr-3 hidden md:grid"
+                  >
+                    Register
+                  </NavLink>
+                </>
+              )}
             </ul>
           </div>
           <Link to="/" className="logo-text text-xl lg:text-3xl font-extrabold">
@@ -119,22 +127,19 @@ function NavBar() {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul
-            className={`menu menu-horizontal px-1 ${
-              isHome ? "text-white" : "text-black"
-            }`}
+            className={`menu menu-horizontal px-1`}
           >
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" className={`${isHome ? "text-white" : ""}`}>Home</NavLink>
             </li>
             <li>
-              <NavLink to="/all-scholarships">All Scholarships</NavLink>
+              <NavLink className={`${isHome ? "text-white" : ""}`} to="/all-scholarships">All Scholarships</NavLink>
             </li>
             {user && (
               <li>
-                <NavLink to="/dashboard">Dashboard</NavLink>
+                <NavLink className={`${isHome ? "text-white" : ""}`} to="/dashboard">Dashboard</NavLink>
               </li>
             )}
-            
           </ul>
         </div>
         <div className="navbar-end">

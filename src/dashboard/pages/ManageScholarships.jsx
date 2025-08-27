@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useScholarships } from "../../hooks/useScholarships";
 import Loading from "../../pages/Loding";
 import useAxios from "../../hooks/useAxios";
 import useAuth from "../../hooks/useAuth";
 import { useScholarshipsExtend } from "../../hooks/useScholarshipsExtend";
+import SortInput from "../components/SortInput"
 
 const ManageScholarships = () => {
-  const { data: scholarships = [], refetch, isLoading } = useScholarshipsExtend()
+  const [scholarships, setScholarships] = useState([]);
+  const { data, refetch, isLoading } = useScholarshipsExtend()
   const [editingScholarship, setEditingScholarship] = useState(null);
   const [viewingScholarship, setViewingScholarship] = useState(null);
   const axios = useAxios();
@@ -37,7 +39,6 @@ const ManageScholarships = () => {
     e.preventDefault();
     const form = e.target;
     const id = e.target.id.value;
-    console.log(id);
 
     const updatedData = {
       scholarshipName: form.scholarshipName.value,
@@ -66,12 +67,19 @@ const ManageScholarships = () => {
     Swal.fire("Updated!", "Scholarship has been updated.", "success");
   };
 
+  useEffect(() => {
+    if (data) {
+      setScholarships(data);
+    }
+  }, [data]);
+
   if (isLoading) return <Loading />;
 
   return (
-    <div className="p-2 border border-black/5 shadow-sm">
-      <h2 className="text-2xl font-bold mb-4 ml-2">Manage Scholarships</h2>
-      <div className="overflow-x-auto">
+    <div className="">
+      <h2 className="text-2xl mb-4 font-light">Manage Scholarships</h2>
+      <div className="overflow-x-auto bg-base-100 border border-primary rounded">
+        <SortInput data={scholarships} date="postDate" field="scholarshipName" setData={setScholarships} />
         <table className="table table-zebra w-full text-xs">
           <thead>
             <tr>
@@ -118,8 +126,8 @@ const ManageScholarships = () => {
       </div>
 
       {viewingScholarship && (
-        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-          <div className="bg-white rounded shadow-lg w-[70%] p-6 overflow-y-auto max-h-[90vh] relative">
+        <div className="fixed inset-0 bg-base-300 z-50 flex items-center justify-center ">
+          <div className="bg-base-200 border border-primary/30 rounded shadow-lg w-[70%] p-6 overflow-y-auto max-h-[90vh] relative">
             <button
               className="absolute top-3 right-3 btn btn-sm btn-circle hover:bg-red-400"
               onClick={() => setViewingScholarship(null)}
@@ -139,76 +147,76 @@ const ManageScholarships = () => {
 
               {/* Scholarship Info */}
               <div className="flex-1">
-                <h2 className="text-xl font-bold text-gray-800">
+                <h2 className="text-xl font-bold">
                   {viewingScholarship.scholarshipName}
                 </h2>
-                <p className="text-sm text-gray-500 mb-4">
+                <p className="text-sm text-gray-300 mb-4">
                   Posted on {viewingScholarship.postDate} by{" "}
                   {viewingScholarship.postedBy}
                 </p>
 
                 <div className="">
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       University:
                     </span>{" "}
                     {viewingScholarship.universityName}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Country:
                     </span>{" "}
                     {viewingScholarship.country}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       City:
                     </span>{" "}
                     {viewingScholarship.city}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       World Rank:
                     </span>{" "}
                     {viewingScholarship.worldRank}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Degree:
                     </span>{" "}
                     {viewingScholarship.degree}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Subject Category:
                     </span>{" "}
                     {viewingScholarship.subjectCategory}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Scholarship Category:
                     </span>{" "}
                     {viewingScholarship.scholarshipCategory}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Tuition Fees:
                     </span>{" "}
                     {viewingScholarship.tuitionFees}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Application Fees:
                     </span>{" "}
                     {viewingScholarship.applicationFees}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm block">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm block">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Service Charge:
                     </span>{" "}
                     {viewingScholarship.serviceCharge}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Deadline:
                     </span>{" "}
@@ -222,8 +230,8 @@ const ManageScholarships = () => {
       )}
 
       {editingScholarship && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-start justify-center overflow-y-auto py-10 px-4">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl relative p-6">
+        <div className="fixed inset-0 z-50 bg-base-300 bg-opacity-30 flex items-start justify-center overflow-y-auto py-10 px-4">
+          <div className="bg-base-100 rounded-lg shadow-lg w-full max-w-4xl relative p-6">
             <button
               className="btn btn-sm btn-circle absolute top-3 right-3"
               onClick={() => setEditingScholarship(null)}

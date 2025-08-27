@@ -12,7 +12,6 @@ function MyReviews() {
   const [reviewForm, setReviewForm] = useState(false);
   const [getApplication, setGetApplication] = useState(false);
 
-
   const editReviewFn = (e) => {
     e.preventDefault();
 
@@ -23,8 +22,6 @@ function MyReviews() {
       rating: formData.get("rating"),
       comment: formData.get("comment"),
     };
-
-    console.log(updatedData)
 
     // Then make PUT request to backend
     axios
@@ -43,30 +40,28 @@ function MyReviews() {
       });
   };
 
-    const handleDelete = async (id) => {
-      const confirm = await Swal.fire({
-        title: "Are you sure?",
-        text: "This action cannot be undone.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, cancel it!",
-      });
-  
-      if (confirm.isConfirmed) {
-        await axios
-          .delete(`/delete-review/${id}`, {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          })
-          .then(() => {
-            setReviews(
-              reviews.filter((application) => application._id !== id)
-            );
-            Swal.fire("Deleted!", "Review has been deleted.", "success");
-          });
-      }
-    };
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel it!",
+    });
+
+    if (confirm.isConfirmed) {
+      await axios
+        .delete(`/delete-review/${id}`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then(() => {
+          setReviews(reviews.filter((application) => application._id !== id));
+          Swal.fire("Deleted!", "Review has been deleted.", "success");
+        });
+    }
+  };
 
   useEffect(() => {
     axios
@@ -76,14 +71,14 @@ function MyReviews() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setReviews(res.data);
       });
   }, [getApplication]);
 
   return (
     <div>
-      <div className="overflow-x-auto border shadow-sm border-black/5">
+      <h2 className="text-2xl font-light mb-4">My Reviews</h2>
+      <div className="overflow-x-auto border shadow-sm border-primary rounded bg-base-100">
         <table className="table">
           {/* head */}
           <thead>

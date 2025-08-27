@@ -42,11 +42,11 @@ function LoginPage() {
         <img className="w-[200px] mx:w-[400px]" src={loginImage} alt="" />
       </div>
       <div className="h-full flex flex-col justify-center items-center px-4 md:px-10">
-        <form onSubmit={loginUser} className="p-4 w-full md:w-[80%] mx-auto">
+        <form onSubmit={loginUser} className="p-4 w-full md:w-[80%] mx-auto bg-base-100 rounded border border-primary/30">
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
             >
               Email
             </label>
@@ -61,7 +61,7 @@ function LoginPage() {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
             >
               Password
             </label>

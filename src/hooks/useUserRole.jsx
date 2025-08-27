@@ -6,11 +6,11 @@ const useUserRole = () => {
     const { user, loading: authLoading } = useAuth();
     const axios = useAxios();
 
-    const { data: role = 'user', isLoading: roleLoading, refetch } = useQuery({
+    const { data: role = '', isLoading: roleLoading, refetch } = useQuery({
         queryKey: ['userRole', user?.email],
         enabled: !authLoading && !!user?.email,
         queryFn: async () => {
-            const res = await axios.get(`/user-role`, {
+            const res = await axios.get(`http://localhost:5000/user-role`, {
                 headers: {
                     Authorization: "Bearer " + user.accessToken,
                 },

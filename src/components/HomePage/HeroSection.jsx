@@ -53,7 +53,7 @@ function HeroSection() {
           </div>
           <img
             className="object-center h-full w-full"
-            src="https://avlod.media/wp-content/uploads/2022/11/oksford-1.jpg"
+            src="https://i.ytimg.com/vi/bsjI-BMQb5Q/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFYgZSgsMA8=&rs=AOn4CLCvCXML9neOrXcRTqI2NLCf97hkGw"
             alt=""
           />
         </SwiperSlide>

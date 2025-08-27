@@ -4,27 +4,26 @@ import {
   useStripe
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
+import useAxios from "../hooks/useAxios";
 
 const CheckoutForm = ({ amount, onSuccess }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState("");
   const [processing, setProcessing] = useState(false);
+  const axios = useAxios();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
 
-    // Call backend to get clientSecret
-    const res = await fetch("http://localhost:5000/create-payment-intent", {
-      method: "POST",
+    const res = await axios.post("/create-payment-intent",{amount} ,{
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access-token")}`,
-      },
-      body: JSON.stringify({ amount }),
+        "Content-Type": "application/json"
+      }
     });
-    const { clientSecret } = await res.json();
+
+    const { clientSecret } = await res.data;
 
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {

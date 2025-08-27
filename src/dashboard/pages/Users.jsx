@@ -8,7 +8,6 @@ function Users() {
   const axios = useAxios();
   const { user } = useAuth();
   const [users, setUsers] = useState([]);
-  console.log(user.accessToken);
 
   const changeRole = (email, role) => {
     axios
@@ -59,7 +58,6 @@ function Users() {
   };
 
   const filterUsers = (role) => {
-    console.log(role);
     setUsers((users) => users.filter((user) => user.role === role));
   };
 
@@ -77,7 +75,8 @@ function Users() {
 
   return (
     <div>
-      <div className="overflow-x-auto border shadow-sm border-black/5">
+      <h2 className="text-2xl font-light mb-4">Manage Users</h2>
+      <div className="overflow-x-auto border shadow-sm border-primary bg-base-100 rounded">
         <div className="flex justify-end my-3">
           <select
             onChange={(e) => filterUsers(e.target.value)}

@@ -18,7 +18,6 @@ function ScholarshipDetails() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setScholarship(res.data);
       });
   }, []);

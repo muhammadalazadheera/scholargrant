@@ -1,4 +1,3 @@
-import { useLoaderData } from "react-router";
 import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -8,6 +7,7 @@ import useAxios from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
 import Loading from "./Loding";
 import { toast } from "react-toastify";
+import { Link } from "react-router";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUB_KEY);
 
@@ -19,6 +19,7 @@ const ApplyScholarship = () => {
   const [scholarship, setScholarship] = useState([]);
   const [fee, setFee] = useState("$0");
   const [stuId, setStuId] = useState(null);
+  const [applied, setApplied] = useState(false);
 
   const id = params.get("id");
   const [paid, setPaid] = useState(false);
@@ -72,13 +73,11 @@ const ApplyScholarship = () => {
       });
 
       if (res.data.success) {
-        alert("Application submitted successfully!");
-      } else {
-        alert("Something went wrong.");
+        toast.success("Application submitted successfully!");
+        setApplied(true)
       }
     } catch (err) {
-      console.error(err);
-      alert("Failed to submit application.");
+      toast.error(err.response?.data?.message || "Submission failed");
     }
   };
 
@@ -102,7 +101,6 @@ const ApplyScholarship = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         setScholarship(res.data);
         setFee(res.data.applicationFees);
       });
@@ -113,27 +111,31 @@ const ApplyScholarship = () => {
   }
 
   return (
-    <div className="w-[85%] mx-auto mt-[70px] py-10">
+    <div className="w-[85%] mx-auto mt-[70px] py-20">
       <h2 className="text-2xl text-primary font-bold">
         {scholarship.scholarshipName}
       </h2>
-      <p className="text-xl">
-        Application Fee: {scholarship?.applicationFees} -{" "}
-        {paid ? "Paid" : "Unpaid"}
+      <p className="text-xl font-light my-1">
+        Application Fee: {scholarship?.applicationFees}
       </p>
+      <p className="text-xl font-light">
+        Payment Status:{" "}
+        <span className="text-error">{paid ? "Paid" : "Unpaid"}</span>
+      </p>
+
       {!paid ? (
         <div className="border p-4 my-5 w-[100%] md:w-[50%] rounded-sm py-7">
           <Elements stripe={stripePromise}>
             <CheckoutForm
               amount={parseFloat(fee)}
               onSuccess={() => {
-                setPaid(true)
-                toast.success('Payment Successfull')
-            }}
+                setPaid(true);
+                toast.success("Payment Successfull");
+              }}
             />
           </Elements>
         </div>
-      ) : (
+      ) : paid && !applied ? (
         <div className="mt-5">
           <form
             className=" p-6 bg-gray-50 rounded-md shadow-md"
@@ -301,6 +303,19 @@ const ApplyScholarship = () => {
               Submit Application
             </button>
           </form>
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center bg-base-300 rounded shadow py-10 my-3">
+          <img src="/images/success.gif" alt="" />
+          <div className="blink-success my-3 text-xl font-extrabold">
+            Successfully Applied!
+          </div>
+          <Link
+            to="/all-scholarships"
+            className="text-primary btn btn-outline btn-primary"
+          >
+            Browse More Scholarship
+          </Link>
         </div>
       )}
     </div>

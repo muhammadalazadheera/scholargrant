@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useScholarships } from "../hooks/useScholarships";
 import Loading from "./Loding";
 import { Link } from "react-router";
@@ -8,16 +8,39 @@ function AllScholarships() {
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const limit = 8;
+  const [scholarships, setScholarships] = useState([]);
 
   const { data, isLoading, isError } = useScholarships({ page, limit, search });
   const totalPages = data?.totalPages || 1;
-  const scholarships = data?.scholarships;
 
   const handleSearch = (e) => {
     e.preventDefault();
     setSearch(searchInput); // Set actual query
     setPage(1); // Reset page
   };
+
+  const [sortOption, setSortOption] = useState("newest");
+
+  useEffect(() => {
+    if (!data || !data.scholarships) return;
+    let sorted = [...data?.scholarships];
+
+    if (sortOption === "oldest") {
+      sorted.sort((a, b) => new Date(a.postDate) - new Date(b.postDate));
+    } else if (sortOption === "newest") {
+      sorted.sort((a, b) => new Date(b.postDate) - new Date(a.postDate));
+    } else if (sortOption === "az") {
+      sorted.sort((a, b) =>
+        (a.scholarshipName || "").localeCompare(b.scholarshipName || "")
+      );
+    } else if (sortOption === "za") {
+      sorted.sort((a, b) =>
+        (b.scholarshipName || "").localeCompare(a.scholarshipName || "")
+      );
+    }
+
+    setScholarships(sorted);
+  }, [data, sortOption]);
 
   if (isLoading) return <Loading />;
 
@@ -37,11 +60,10 @@ function AllScholarships() {
       <div className="w-[85%] mx-auto">
         <div className="mt-5">
           <small>
-              Search By Scholarship Name, University Name, Country, and Degree.
-              Leave Blank And Click Search Button To Get All The Scholarships.
-            </small>
+            Search By Scholarship Name, University Name, Country, and Degree.
+            Leave Blank And Click Search Button To Get All The Scholarships.
+          </small>
           <form onSubmit={handleSearch} className="mb-5">
-            
             <input
               className="input input-primary block md:inline w-[100%] md:w-[80%] border-r-0 rounded-tr-none rounded-br-none focus-within:outline-0"
               type="text"
@@ -52,17 +74,31 @@ function AllScholarships() {
               onChange={(e) => setSearchInput(e.target.value)}
             />
             <input
-              className="btn btn-primary btn-block md:btn mt-2 md:mt-0 md:w-[20%] rounded-none"
+              className="btn btn-primary btn-block md:btn mt-2 md:mt-0 text-white md:w-[20%] rounded-none"
               type="submit"
               value="Search"
             />
           </form>
 
+          <div className="flex justify-between items-center my-10">
+            <h2 className="text-xl font-bold">Scholarships</h2>
+            <select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="select select-primary"
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="az">A → Z</option>
+              <option value="za">Z → A</option>
+            </select>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {scholarships?.map((sch) => (
               <div
                 key={sch._id}
-                className="card bg-base-100 shadow-sm rounded-sm"
+                className="card bg-base-300 shadow-sm rounded-sm"
               >
                 <figure>
                   <img
@@ -82,9 +118,17 @@ function AllScholarships() {
                   <div className="text-sm text-gray-400">
                     Tuition Fees ({sch.tuitionFees})
                   </div>
-                  <div className="text-sm text-gray-400">{sch.degree}</div>
+                  <div className="text-sm text-gray-400">
+                    Degree: {sch.degree}
+                  </div>
+                  <div className="text-sm text-gray-400">
+                    Posted On: {sch.postDate}
+                  </div>
                   <div className="card-actions justify-start mt-4">
-                    <Link to={`/scholarship-details/${sch._id}`} className="btn btn-sm btn-block btn-outline btn-primary">
+                    <Link
+                      to={`/scholarship-details/${sch._id}`}
+                      className="btn btn-sm btn-block btn-outline btn-primary"
+                    >
                       Details
                     </Link>
                   </div>

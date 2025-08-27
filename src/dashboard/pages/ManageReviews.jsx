@@ -24,8 +24,6 @@ function ManageReviews() {
       comment: formData.get("comment"),
     };
 
-    console.log(updatedData);
-
     // Then make PUT request to backend
     axios
       .put(`/edit-review/${editReview._id}`, updatedData, {
@@ -82,12 +80,13 @@ function ManageReviews() {
 
   return (
     <div>
-      <div className="overflow-x-auto border shadow-sm border-black/5">
-        <div className="grid grid-cols-1 md:grid-cols-3 p-5">
+      <h2 className="text-2xl font-light mb-4">Manage Reviews</h2>
+      <div className="overflow-x-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           {reviews.map((application) => (
             <div
               key={application._id}
-              className="card bg-base-100 shadow-sm rounded-sm p-2 mx-2 text-center"
+              className="card bg-base-100 shadow-sm rounded-sm p-2 text-center border border-gray-500"
             >
               <figure>
                 <img

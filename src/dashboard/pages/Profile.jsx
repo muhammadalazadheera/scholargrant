@@ -6,7 +6,7 @@ function Profile() {
   const {user} = useAuth();
   const {role} = useUserRole();
   return (
-    <div className='w-[50%] mx-auto border shadow-sm border-black/5 p-2 flex justify-center items-center flex-col'>
+    <div className='w-[100%] mx-auto border border-primary rounded shadow-sm bg-base-100 py-10 flex justify-center items-center flex-col'>
       <img className='rounded-full' width="100px" src={user.photoURL} alt="" />
       <p className='text-center text-xl my-2 text-primary'>{user.displayName} [{role === 'user' ? '' : role}]</p>
       <p className='text-center text-xl mb-2'>{user.email}</p>

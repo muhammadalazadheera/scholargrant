@@ -50,7 +50,7 @@ function TopScholarships() {
         ))}
       </div>
       <div className="flex justify-center mt-5 w-[50%] mx-auto">
-        <Link className="btn btn-ghost bg-white border border-black btn-block text-primary" to="/all-scholarships">
+        <Link className="btn btn-ghost bg-base-100 border border-black btn-block text-primary" to="/all-scholarships">
           Explore All
         </Link>
       </div>

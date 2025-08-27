@@ -4,6 +4,8 @@ import useAxios from "../../hooks/useAxios";
 import Loading from "../../pages/Loding";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import sortFunction from "../../lib/sortnfinter";
+import SortInput from "../components/SortInput";
 
 function ManageApplications() {
   const { user } = useAuth();
@@ -150,17 +152,24 @@ function ManageApplications() {
 
   return (
     <div>
-      <div className="overflow-x-auto border shadow-sm border-black/5">
+      <h2 className="text-2xl font-light mb-4">Manage Applications</h2>
+      <div className="overflow-x-auto border shadow-sm border-primary bg-base-100 rounded">
+        <SortInput
+          data={applications}
+          date="appliedAt"
+          field="scholarshipName"
+          setData={setApplications}
+        />
         <table className="table">
           {/* head */}
           <thead>
             <tr>
               <th>Name</th>
-              <th>University Name</th>
+              <th>Scholarship</th>
               <th>Degree</th>
               <th>Category</th>
               <th>Status</th>
-              <th>Action</th>
+              <th width="22%">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -173,8 +182,8 @@ function ManageApplications() {
             ) : (
               applications.map((application) => (
                 <tr key={application._id} className="capitalize">
+                  <td>{application?.studentName}</td>
                   <td>{application?.scholarshipName}</td>
-                  <td>{application?.universityName}</td>
                   <td>{application?.applyingDegree}</td>
                   <td>{application?.scholarshipCategory}</td>
                   <td>
@@ -232,10 +241,10 @@ function ManageApplications() {
       </div>
 
       {viewApplication && (
-        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-          <div className="bg-white rounded shadow-lg w-[70%] p-6 overflow-y-auto max-h-[90vh] relative">
+        <div className="fixed inset-0 bg-base-300 z-50 flex items-center justify-center">
+          <div className="bg-base-100 rounded shadow-lg w-[70%] p-6 overflow-y-auto max-h-[90vh] relative">
             <button
-              className="absolute top-3 right-3 btn btn-sm btn-circle hover:bg-red-400"
+              className="absolute top-3 right-3 btn btn-sm btn-circle btn-outline btn-error"
               onClick={() => setViewApplication(null)}
             >
               ✕
@@ -244,84 +253,84 @@ function ManageApplications() {
             <div className="flex flex-col md:flex-row gap-6">
               {/* Scholarship Info */}
               <div className="flex-1">
-                <h2 className="text-xl font-bold text-gray-800">
+                <h2 className="text-xl font-bold">
                   {viewApplication.scholarshipName}
                 </h2>
-                <p className="text-sm text-gray-500 mb-4">
+                <p className="text-sm text-gray-300 mb-4">
                   Applied At {viewApplication.appliedAt}
                 </p>
 
                 <div className="">
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       University:
                     </span>{" "}
                     {viewApplication.universityName}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Name:
                     </span>{" "}
                     {viewApplication.studentName}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Email:
                     </span>{" "}
                     {viewApplication.studentEmail}
                   </p>
 
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Phone:
                     </span>{" "}
                     {viewApplication.phone}
                   </p>
 
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Address:
                     </span>{" "}
                     {viewApplication.address}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Study Gap:
                     </span>{" "}
                     {viewApplication.studyGap}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       SSC:
                     </span>{" "}
                     {viewApplication.sscResult}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       HSC:
                     </span>{" "}
                     {viewApplication.hscResult}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Scholarship Category:
                     </span>{" "}
                     {viewApplication.scholarshipCategory}
                   </p>
 
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Degree:
                     </span>{" "}
                     {viewApplication.applyingDegree}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-100 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Subject Category:
                     </span>{" "}
                     {viewApplication.subjectCategory}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-black/5 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Scholarship Category:
                     </span>{" "}
@@ -369,12 +378,12 @@ function ManageApplications() {
 
       {editForm && (
         <dialog open className="modal modal-bottom sm:modal-middle">
-          <div className="modal-box">
+          <div className="modal-box w-full max-w-[85%]">
             <h3 className="font-bold text-lg mb-4">
               Edit Scholarship Application
             </h3>
             <form
-              className="p-6 bg-gray-50 rounded-md shadow-md"
+              className="p-6 bg-base-200 border border-primary/30 rounded-md shadow-md"
               onSubmit={editApp} // 🔄 Update function
             >
               {/* Phone */}

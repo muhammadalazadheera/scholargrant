@@ -18,7 +18,7 @@ function RegisterPage() {
     const password = e.target.password.value;
     const photoURL = e.target.photoURL.value;
 
-    const passwordRegex = /^(?=.{1,5}$)[^A-Z!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]*$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_\-+=\[{\]};:'",.<>/?\\|`~]).{6,}$/;
 
     if (passwordRegex.test(password) === false) {
       setLoginMsg(true);
@@ -28,10 +28,10 @@ function RegisterPage() {
     signUpUser(email, password, name, photoURL)
       .then((user) => {
         toast.success(`Welcome, ${user.user.displayName}`);
-        navigate("/");
+        navigate(location.state || "/");
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error.message);
       });
   };
 
@@ -39,7 +39,6 @@ function RegisterPage() {
     e.preventDefault();
     signInUserWithGoogle().then((user) => {
       if (user) {
-        console.log(user);
         toast.success(`Welcome, ${user.user.displayName}`);
         navigate(location.state || "/");
       }
@@ -53,16 +52,16 @@ function RegisterPage() {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-base-300">
       <div className="auth-page-img mt-[100px] md:mt-0 flex items-center justify-center">
         <img className="w-[200px] md:w-[400px]" src={loginImage} alt="" />
       </div>
       <div className="h-full flex flex-col justify-center items-center px-4 md:px-10">
-        <form onSubmit={registerUser} className="p-4 w-full md:w-[80%] mx-auto">
+        <form onSubmit={registerUser} className="p-4 mt-18 w-full md:w-[80%] mx-auto bg-base-100 rounded border border-primary/30">
           <div className="mb-4">
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium "
             >
               Name
             </label>
@@ -77,7 +76,7 @@ function RegisterPage() {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium "
             >
               Email
             </label>
@@ -92,7 +91,7 @@ function RegisterPage() {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium "
             >
               Password
             </label>

@@ -4,6 +4,7 @@ import useAxios from "../../hooks/useAxios";
 import Loading from "../../pages/Loding";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import SortInput from "../components/SortInput";
 
 function MyApplications() {
   const { user } = useAuth();
@@ -147,7 +148,14 @@ function MyApplications() {
 
   return (
     <div>
-      <div className="overflow-x-auto border shadow-sm border-black/5">
+      <h2 className="text-2xl font-light mb-4">My Applications</h2>
+      <div className="bg-base-100 border-primary overflow-x-auto border shadow-sm rounded">
+        <SortInput
+          data={applications}
+          date="appliedAt"
+          field="scholarshipName"
+          setData={setApplications}
+        />
         <table className="table">
           {/* head */}
           <thead>
@@ -215,8 +223,8 @@ function MyApplications() {
         </table>
       </div>
       {viewApplication && (
-        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-          <div className="bg-white rounded shadow-lg w-[70%] p-6 overflow-y-auto max-h-[90vh] relative">
+        <div className="fixed inset-0 bg-base-200 z-50 flex items-center justify-center">
+          <div className="bg-base-100 rounded shadow-lg w-[70%] p-6 overflow-y-auto max-h-[90vh] relative">
             <button
               className="absolute top-3 right-3 btn btn-sm btn-circle hover:bg-red-400"
               onClick={() => setViewApplication(null)}
@@ -224,87 +232,87 @@ function MyApplications() {
               ✕
             </button>
 
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex flex-col md:flex-row gap-6 bg-base-100">
               {/* Scholarship Info */}
               <div className="flex-1">
-                <h2 className="text-xl font-bold text-gray-800">
+                <h2 className="text-xl font-bold">
                   {viewApplication.scholarshipName}
                 </h2>
-                <p className="text-sm text-gray-500 mb-4">
+                <p className="text-sm mb-4">
                   Applied At {viewApplication.appliedAt}
                 </p>
 
-                <div className="">
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                <div className="border border-primary/30 rounded">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       University:
                     </span>{" "}
                     {viewApplication.universityName}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Name:
                     </span>{" "}
                     {viewApplication.studentName}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Email:
                     </span>{" "}
                     {viewApplication.studentEmail}
                   </p>
 
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Phone:
                     </span>{" "}
                     {viewApplication.phone}
                   </p>
 
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Address:
                     </span>{" "}
                     {viewApplication.address}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Study Gap:
                     </span>{" "}
                     {viewApplication.studyGap}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       SSC:
                     </span>{" "}
                     {viewApplication.sscResult}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       HSC:
                     </span>{" "}
                     {viewApplication.hscResult}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Scholarship Category:
                     </span>{" "}
                     {viewApplication.scholarshipCategory}
                   </p>
 
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Degree:
                     </span>{" "}
                     {viewApplication.applyingDegree}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Subject Category:
                     </span>{" "}
                     {viewApplication.subjectCategory}
                   </p>
-                  <p className="bg-gray-50 p-2 border border-black/5 shadow-sm">
+                  <p className="bg-base-200 p-2 border border-base-100 shadow-sm">
                     <span className="font-semibold w-[35%] inline-block text-primary">
                       Scholarship Category:
                     </span>{" "}
@@ -312,23 +320,25 @@ function MyApplications() {
                   </p>
                 </div>
                 <div className="my-5">
-                  <h2 className="text-xl font-bold text-gray-800">
-                    Feedbacks
-                  </h2>
+                  <h2 className="text-xl font-bold">Feedbacks</h2>
                   <div className="my-4">
-                    {
-                      feedbacks.map((feedback) => {
-                        return(
-                          <div className="border border-black/10 p-4 rounded-sm my-2">
-                            <p className="font-thin text-2xl mb-1">{feedback.comment}</p>
-                            <div className="flex items-center gap-1">
-                              <img className="rounded-full w-[20px]" src={feedback.photo} alt="" />
-                              <small>{feedback.userName}</small>
-                            </div>
+                    {feedbacks.map((feedback) => {
+                      return (
+                        <div className="bg-base-200 border border-primary/30 p-4 rounded-sm my-2">
+                          <p className="font-thin text-2xl mb-1">
+                            {feedback.comment}
+                          </p>
+                          <div className="flex items-center gap-1">
+                            <img
+                              className="rounded-full w-[20px]"
+                              src={feedback.photo}
+                              alt=""
+                            />
+                            <small>{feedback.userName}</small>
                           </div>
-                        )
-                      })
-                    }
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -338,134 +348,136 @@ function MyApplications() {
       )}
 
       {editForm && (
-        <dialog open className="modal modal-bottom sm:modal-middle">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">
-              Edit Scholarship Application
-            </h3>
-            <form
-              className="p-6 bg-gray-50 rounded-md shadow-md"
-              onSubmit={editApp} // 🔄 Update function
-            >
-              {/* Phone */}
-              <div className="mb-4">
-                <label className="block mb-1 font-medium">Phone Number</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  required
-                  defaultValue={reviewApp.phone}
-                  placeholder="+8801XXXXXXXXX"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              {/* Photo */}
-              <div className="mb-4">
-                <label className="block mb-1 font-medium">
-                  Applicant Photo
-                </label>
-                <input
-                  type="text"
-                  name="photo"
-                  required
-                  defaultValue={reviewApp.photo}
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              {/* Address */}
-              <div className="mb-4">
-                <label className="block mb-1 font-medium">
-                  Address (Village, District, Country)
-                </label>
-                <textarea
-                  name="address"
-                  required
-                  defaultValue={reviewApp.address}
-                  placeholder="Enter your full address"
-                  className="textarea textarea-bordered w-full"
-                  rows={3}
-                ></textarea>
-              </div>
-
-              {/* Degree */}
-              <div className="mb-4">
-                <label className="block mb-1 font-medium">
-                  Applying Degree
-                </label>
-                <select
-                  name="applyingDegree"
-                  required
-                  defaultValue={reviewApp.applyingDegree}
-                  className="select select-bordered w-full"
-                >
-                  <option defaultValue="">Select degree</option>
-                  {degrees.map((d) => (
-                    <option key={d} defaultValue={d}>
-                      {d}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* SSC */}
-              <div className="mb-4">
-                <label className="block mb-1 font-medium">SSC Result</label>
-                <input
-                  type="text"
-                  name="sscResult"
-                  required
-                  defaultValue={reviewApp.sscResult}
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              {/* HSC */}
-              <div className="mb-4">
-                <label className="block mb-1 font-medium">HSC Result</label>
-                <input
-                  type="text"
-                  name="hscResult"
-                  required
-                  defaultValue={reviewApp.hscResult}
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              {/* Study Gap */}
-              <div className="mb-4">
-                <label className="block mb-1 font-medium">
-                  Study Gap (Optional)
-                </label>
-                <select
-                  name="studyGap"
-                  defaultValue={reviewApp.studyGap}
-                  className="select select-bordered w-full"
-                >
-                  <option defaultValue="">Select if any</option>
-                  {studyGapOptions.map((gap) => (
-                    <option key={gap} defaultValue={gap}>
-                      {gap}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Update Button */}
-              <button type="submit" className="btn btn-primary w-full mt-6">
-                Update Application
-              </button>
-              <button
-                onClick={() => setEditForm(false)}
-                type="submit"
-                className="btn btn-error w-full mt-6"
+        <div className="w-full md:w-[95%] mx-auto">
+          <dialog open className="modal modal-bottom sm:modal-middle">
+            <div className="modal-box w-full max-w-[80%]">
+              <h3 className="font-bold text-lg mb-4">
+                Edit Scholarship Application
+              </h3>
+              <form
+                className="p-6 bg-base-200 rounded-md shadow-md"
+                onSubmit={editApp} // 🔄 Update function
               >
-                Cancel
-              </button>
-            </form>
-          </div>
-        </dialog>
+                {/* Phone */}
+                <div className="mb-4">
+                  <label className="block mb-1 font-medium">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    required
+                    defaultValue={reviewApp.phone}
+                    placeholder="+8801XXXXXXXXX"
+                    className="input input-bordered w-full"
+                  />
+                </div>
+
+                {/* Photo */}
+                <div className="mb-4">
+                  <label className="block mb-1 font-medium">
+                    Applicant Photo
+                  </label>
+                  <input
+                    type="text"
+                    name="photo"
+                    required
+                    defaultValue={reviewApp.photo}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+
+                {/* Address */}
+                <div className="mb-4">
+                  <label className="block mb-1 font-medium">
+                    Address (Village, District, Country)
+                  </label>
+                  <textarea
+                    name="address"
+                    required
+                    defaultValue={reviewApp.address}
+                    placeholder="Enter your full address"
+                    className="textarea textarea-bordered w-full"
+                    rows={3}
+                  ></textarea>
+                </div>
+
+                {/* Degree */}
+                <div className="mb-4">
+                  <label className="block mb-1 font-medium">
+                    Applying Degree
+                  </label>
+                  <select
+                    name="applyingDegree"
+                    required
+                    defaultValue={reviewApp.applyingDegree}
+                    className="select select-bordered w-full"
+                  >
+                    <option defaultValue="">Select degree</option>
+                    {degrees.map((d) => (
+                      <option key={d} defaultValue={d}>
+                        {d}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* SSC */}
+                <div className="mb-4">
+                  <label className="block mb-1 font-medium">SSC Result</label>
+                  <input
+                    type="text"
+                    name="sscResult"
+                    required
+                    defaultValue={reviewApp.sscResult}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+
+                {/* HSC */}
+                <div className="mb-4">
+                  <label className="block mb-1 font-medium">HSC Result</label>
+                  <input
+                    type="text"
+                    name="hscResult"
+                    required
+                    defaultValue={reviewApp.hscResult}
+                    className="input input-bordered w-full"
+                  />
+                </div>
+
+                {/* Study Gap */}
+                <div className="mb-4">
+                  <label className="block mb-1 font-medium">
+                    Study Gap (Optional)
+                  </label>
+                  <select
+                    name="studyGap"
+                    defaultValue={reviewApp.studyGap}
+                    className="select select-bordered w-full"
+                  >
+                    <option defaultValue="">Select if any</option>
+                    {studyGapOptions.map((gap) => (
+                      <option key={gap} defaultValue={gap}>
+                        {gap}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Update Button */}
+                <button type="submit" className="btn btn-primary w-full mt-6">
+                  Update Application
+                </button>
+                <button
+                  onClick={() => setEditForm(false)}
+                  type="submit"
+                  className="btn btn-error w-full mt-6 text-white"
+                >
+                  Cancel
+                </button>
+              </form>
+            </div>
+          </dialog>
+        </div>
       )}
 
       {reviewForm && (

@@ -17,7 +17,7 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const provider = new GoogleAuthProvider();
-  const axiosInstance = useAxios()
+  const axiosInstance = useAxios();
 
   const signUpUser = async (email, password, name, photoURL) => {
     setLoading(true);
@@ -45,7 +45,7 @@ function AuthProvider({ children }) {
         displayName: name,
         photoURL,
       });
-      
+
       return userInfo;
     } catch (error) {
       setLoading(false);
@@ -56,9 +56,11 @@ function AuthProvider({ children }) {
   const signInUser = async (email, password) => {
     try {
       setLoading(true);
-      return await signInWithEmailAndPassword(auth, email, password);
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      
+      return user;
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       toast.error(`${error.message}` || "An error occurred during sign-in");
     }
   };

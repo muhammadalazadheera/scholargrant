@@ -12,10 +12,8 @@ function Footer() {
             </p>
           </div>
           <div className="my-7 md:my-0">
-            <ul className="uppercase text-(--primary-color) text-center md:text-left text-lg font-light">
-              <li>privacy policy</li>
-              <li>terms & condition</li>
-              <li>developer resources</li>
+            <ul className="capitalize text-(--primary-color) text-center md:text-left text-lg font-light">
+              <li>All rights reserved Al Azad Heera &copy;2025</li>
             </ul>
           </div>
           <div className="social-links">
